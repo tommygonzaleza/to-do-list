@@ -1,5 +1,19 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
+.entire-header {
+    margin-top: 10px;
+}
+.entire-body {
+    width: 100%;
+    margin-top: 0;
+    border: 2px solid red;
+}
+.ul-style {
+    display: inline-block;
+}
+.form-styles {
+    display: inline-block;
+}
 /* 
 
     You can write your own styles here...
