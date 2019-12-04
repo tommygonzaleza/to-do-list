@@ -1,18 +1,56 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
+body {
+    background:#EBEBEB;
+    margin:0px;
+    padding:0px;
+  }
+.box_1{
+    display: inline-block;
+    background:white;
+    border-radius:5px;
+    border:1px solid #DEDEDE;
+    width:500px;
+    height: 200px;
+    position:relative;
+    top:64px;
+    left:50%;
+    transform:translate(-50%);
+}
 .entire-header {
-    margin-top: 10px;
+    display: inline-block;
+    height: 50px;
+    width: auto;
+    margin: 0 auto;
+}
+h1 {
+    width: auto;
 }
 .entire-body {
     width: 100%;
-    margin-top: 0;
-    border: 2px solid red;
-}
-.ul-style {
-    display: inline-block;
+    margin: 0 auto;
 }
 .form-styles {
-    display: inline-block;
+    width: auto;
+    margin-top: 16px;
+}
+input {
+    float: left;
+    margin: 0;
+    width: 200px;
+    height: 25px;
+}
+.ul-style {
+    display: block;
+    width: 100%;
+    height: 0;
+    margin: 8px;
+}
+.task-left-style {
+    position: absolute;
+    margin: 16px;
+    bottom: 0px;
+    right: 0px;
 }
 /* 
 
