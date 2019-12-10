@@ -1,0 +1,92 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+body {
+    background:#EBEBEB;
+    margin: 0px;
+    padding:0px;
+  }
+.box_1{
+    display: inline-block;
+    background:white;
+    border-radius:5px;
+    border:1px solid #DEDEDE;
+    width:500px;
+    height: auto;
+    position:relative;
+    top:64px;
+    left:50%;
+    transform:translate(-50%);
+}
+.entire-header {
+    display: inline-block;
+    height: 50px;
+    width: auto;
+    margin: 0 auto;
+}
+h1 {
+    width: auto;
+}
+.entire-body {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.form-styles {
+    display: block;
+    width: auto;
+    margin: 0px 16px;
+}
+input {
+    float: left;
+    margin: 0px;
+    width: 200px;
+    height: 25px;
+}
+.ul-style {
+    display: block !important;
+    width: 100%;
+    height: auto;
+    float: left;
+    margin: 8px 8px;
+    padding: 0px;
+    list-style: none;
+}
+.li-style {
+    display: block;
+    height: 24px;
+    width: 90%;
+    padding: 0px !important;
+    padding-bottom: 2px !important;
+    margin: 4px 0px !important;
+    border-bottom: 1px solid #DEDEDE;
+}
+.list-item {
+    margin: 0px 12px;
+    float: left;
+}
+.check-style {
+    float: right;
+    width: 16px;
+    height: 16px;
+    margin: 4px 4px;
+}
+.task-left-style {
+    position: relative;
+    float: right;
+    margin: 12px !important;
+    padding: 0px !important;
+}
+div p {
+    margin: 0px;
+}
+/* 
+
+    You can write your own styles here...
+    
+    
+    ...Or you can use the import command to include 
+    other sylesheets into your bunde as well, e.j:
+    
+    import 'relative/path/to/stylesheet.scss';
+
+*/
