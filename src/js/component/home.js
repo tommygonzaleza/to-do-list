@@ -9,21 +9,64 @@ export class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tasks: [
-				"Take a shower",
-				"Wash the dishes",
-				"Cook dinner",
-				"Eat dinner"
-			],
+			tasks: [],
 			newTask: ""
 		};
 		this.handleAddTasks = this.handleAddTasks.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleDeleteTask = this.handleDeleteTask.bind(this);
 	}
+	componentDidMount() {
+		fetch(
+			"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
+			{
+				method: "GET",
+				headers: {
+					"Content-type": "application/json"
+				}
+			}
+		)
+			.then(res => {
+				console.log(res.ok);
+				console.log(res.status);
+				console.log(res.text());
+				if (res.status == 404) {
+					let emptyArray = [];
+					fetch(
+						"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
+						{
+							method: "POST",
+							body: JSON.stringify(emptyArray),
+							headers: {
+								"Content-type": "application/json"
+							}
+						}
+					)
+						.then(res => {
+							console.log("Tried to create user: ");
+							console.log(res.status);
+							console.log(res.text());
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				} else {
+					return Response.json();
+				}
+			})
+				.then(data => {
+					console.log(data);
+					this.setState({
+						tasks: data,
+						newTask: ""
+					})
+				})
+				.catch(error => {
+					console.log(error)
+				});
+	}
 	handleAddTasks(e) {
 		e.preventDefault();
-		let task = e.target.value;
 		this.setState({
 			tasks: [...this.state.tasks, this.state.newTask],
 			newTask: ""
