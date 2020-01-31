@@ -2,6 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import "regenerator-runtime/runtime";
 //include bootstrap npm library into the bundle
 import "bootstrap";
 

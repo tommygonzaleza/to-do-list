@@ -29,6 +29,7 @@ export class Home extends React.Component {
 				console.log(res1.status);
 				if (res1.status == 404) {
 					let emptyArray = [];
+					let userTasks = [];
 					await fetch(
 						"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
 						{
@@ -51,11 +52,14 @@ export class Home extends React.Component {
 										"Content-type": "application/json"
 									}
 								}
-							).then(res3 => res3.json());
+							).then(
+								async res3 => (userTasks = await res3.json())
+							);
 						})
 						.catch(error => {
 							console.log(error);
 						});
+					return userTasks;
 				} else {
 					return res1.json();
 				}
@@ -70,6 +74,43 @@ export class Home extends React.Component {
 			.catch(error => {
 				console.log(error);
 			});
+	}
+	async componentDidUpdate() {
+		if (this.state.tasks.length == 0) {
+			// create
+			let userTasks = [];
+			await fetch(
+				"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
+				{
+					method: "POST",
+					body: JSON.stringify(userTasks),
+					headers: {
+						"Content-type": "application/json"
+					}
+				}
+			)
+				.then(async res1 => {
+					console.log("Tried to create user: ");
+					console.log(res1.status);
+					console.log(res1.text());
+					await fetch(
+						"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
+						{
+							method: "GET",
+							headers: {
+								"Content-type": "application/json"
+							}
+						}
+					).then(async res2 => (userTasks = await res2.json()));
+				})
+				.catch(error => {
+					console.log(error);
+				});
+			this.setState({
+				tasks: userTasks,
+				newTask: ""
+			});
+		}
 	}
 	handleAddTasks(e) {
 		e.preventDefault();
