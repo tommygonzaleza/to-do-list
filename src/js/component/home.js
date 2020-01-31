@@ -13,8 +13,8 @@ export class Home extends React.Component {
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleDeleteTask = this.handleDeleteTask.bind(this);
 	}
-	componentDidMount() {
-		fetch(
+	async componentDidMount() {
+		await fetch(
 			"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
 			{
 				method: "GET",
@@ -23,13 +23,13 @@ export class Home extends React.Component {
 				}
 			}
 		)
-			.then(res => {
+			.then(async res => {
 				let res1 = res.clone();
 				console.log(res1.ok);
 				console.log(res1.status);
 				if (res1.status == 404) {
 					let emptyArray = [];
-					fetch(
+					await fetch(
 						"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
 						{
 							method: "POST",
@@ -39,11 +39,11 @@ export class Home extends React.Component {
 							}
 						}
 					)
-						.then(res2 => {
+						.then(async res2 => {
 							console.log("Tried to create user: ");
 							console.log(res2.status);
 							console.log(res2.text());
-							fetch(
+							await fetch(
 								"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
 								{
 									method: "GET",
@@ -133,7 +133,7 @@ export class Home extends React.Component {
 	}
 	handleDeleteTask(indexToDelete) {
 		let tasksLeft = this.state.tasks.filter(
-			index => index != indexToDelete
+			(task, index) => index != indexToDelete
 		);
 		fetch(
 			"https://assets.breatheco.de/apis/fake/todos/user/tommygonzaleza",
@@ -161,10 +161,17 @@ export class Home extends React.Component {
 						})
 						.then(data => {
 							console.log(data);
-							this.setState({
-								tasks: data,
-								newTask: ""
-							});
+							if (tasksLeft.length > 0) {
+								this.setState({
+									tasks: data,
+									newTask: ""
+								});
+							} else {
+								this.setState({
+									tasks: [],
+									newTask: ""
+								});
+							}
 						})
 						.catch(error => {
 							console.log(error);
@@ -184,36 +191,38 @@ export class Home extends React.Component {
 				<header className="entire-header col-12 text-center mb-3">
 					<h1>Task List</h1>
 				</header>
-				<section className="entire-body">
-					<form
-						className="form-style text-center"
-						onSubmit={this.handleAddTasks}>
-						<input
-							placeholder="Add new tasks..."
-							onChange={this.handleInputChange}
-							value={this.state.newTask}
-						/>
-					</form>
-					<ul className="main-list ul-style mx-auto my-auto">
-						{this.state.tasks.map((value, index) => {
-							return (
-								<li key={index} className="li-style col-12">
-									{value.label}
-									<img
-										className="check-style"
-										onClick={e =>
-											this.handleDeleteTask(index)
-										}
-										src={checkButton}
-									/>
-								</li>
-							);
-						})}
-					</ul>
-					<div className="task-left-style col-3">
-						<p>{this.state.tasks.length} tasks left</p>
-					</div>
-				</section>
+				{tasks && (
+					<section className="entire-body">
+						<form
+							className="form-style text-center"
+							onSubmit={this.handleAddTasks}>
+							<input
+								placeholder="Add new tasks..."
+								onChange={this.handleInputChange}
+								value={this.state.newTask}
+							/>
+						</form>
+						<ul className="main-list ul-style mx-auto my-auto">
+							{this.state.tasks.map((value, index) => {
+								return (
+									<li key={index} className="li-style col-12">
+										{value.label}
+										<img
+											className="check-style"
+											onClick={e =>
+												this.handleDeleteTask(index)
+											}
+											src={checkButton}
+										/>
+									</li>
+								);
+							})}
+						</ul>
+						<div className="task-left-style col-3">
+							<p>{this.state.tasks.length} tasks left</p>
+						</div>
+					</section>
+				)}
 			</div>
 		);
 	}
